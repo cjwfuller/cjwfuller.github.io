@@ -1,0 +1,64 @@
+---
+layout: post
+title: 'SELinux: Cheat Sheet'
+categories:
+- programming
+- selinux
+tags: []
+status: draft
+type: post
+published: false
+meta:
+  geo_public: '0'
+author: 
+---
+<blockquote>selinux - NSA Security-Enhanced Linux (SELinux)</p>
+<p>NSA Security-Enhanced Linux (SELinux) is an implementation of a flexible mandatory access control architecture in the Linux operating system.</p></blockquote>
+<p>This guide is for anyone who wants to get started with SELinux on their server. The OS that I'm working with here is CentOS 6.4 but other RHEL-like Operating Systems will work in the same way.</p>
+<p>Before continuing, make sure the <code>semanage</code> program is installed:</p>
+<p>[code language="text"]<br />
+yum install policycoreutils-python<br />
+[/code]</p>
+<p>we will use <code>semanage</code> to manage the SELinux policy.</p>
+<h2>SELinux modes</h2>
+<p>Find out the current mode by running the <code>getenforce</code> command:</p>
+<p>[code language="text"]<br />
+getenforce<br />
+Enforcing<br />
+[/code]</p>
+<p>Modes can be <code>Enforcing</code>, <code>Permissive</code> and <code>Disabled</code>. <code>Enforcing</code> will enforce the SELinux policy, <code>Permissive</code> won't enforce the policy but will log denials that would have been enforced if the mode was set to <code>Enforcing</code>.</p>
+<p>To enable/disable SELinux at runtime you can use the <code>setenforce</code> to modify the mode SELinux is running in:</p>
+<p>[code language="text"]<br />
+setenforce<br />
+usage:  setenforce [ Enforcing | Permissive | 1 | 0 ]<br />
+[/code]</p>
+<p>Note that the above <strong>will not</strong> survive a reboot; to make the survive a reboot you must edit the config file:</p>
+<p>[code language="text"]<br />
+vim /etc/selinux/config<br />
+[/code]</p>
+<h2>Non-standard ports</h2>
+<p>Let's set up an Apache web server to run on a non-standard port. This is something that requires some SELinux configuration. By default, services are configured to only run on certain ports. Standard ports for various services can be found by using <code>semanage port -l</code>:</p>
+<p>[code language="text"]<br />
+semanage port -l | grep http_port_t<br />
+http_port_t                    tcp      80, 443, 488, 8008, 8009, 8443<br />
+[/code]</p>
+<p>So install Apache and attempt to start the service on port 999. Note: This example assumes that you have configured <code>iptables</code> to allow TCP/999 traffic (not part of this guide).</p>
+<p>[code language="text"]<br />
+yum install httpd -y<br />
+vim /etc/httpd/conf/httpd.conf # change Listen 80 to Listen 999<br />
+service httpd start<br />
+[/code]</p>
+<p>Port 999 is not a standard <code>httpd</code> port so SELinux in <code>Enforcing</code> will not allow us to start Apache:</p>
+<p>[code language="text"]<br />
+(13)Permission denied: make_sock: could not bind to address [::]:999<br />
+(13)Permission denied: make_sock: could not bind to address 0.0.0.0:999<br />
+no listening sockets available, shutting down<br />
+Unable to open logs<br />
+[/code]</p>
+<p>Okay, so the problem is quite obvious here but it isn't always. Often we have to look in the audit log (<code>/var/log/audit/audit.log</code>) to see if SELinux is causing something to not work. Let's look anyway so we know where to go for more information. Tailing and grepping the audit log when the service is trying to start tells you what is wrong:</p>
+<p>[code language="text"]<br />
+tail --follow /var/log/audit/audit.log | grep --invert-match success<br />
+type=AVC msg=audit(1376300293.575:3610): avc:  denied  { name_bind } for  pid=5338<br />
+comm=&quot;httpd&quot; src=999 scontext=unconfined_u:system_r:httpd_t:s0<br />
+tcontext=system_u:object_r:hi_reserved_port_t:s0 tclass=tcp_socket<br />
+[/code]</p>

@@ -1,0 +1,24 @@
+---
+layout: post
+title: Change directory after ssh login
+categories:
+- bash
+- ssh
+- zsh
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  geo_public: '0'
+  _publicize_pending: '1'
+author: 
+---
+<p>When I login to a particular server of mine, I nearly always want to go to a certain directory instead of the default <code>/home/chris</code>.  </p>
+<p>I use <code>zsh</code> as my shell so I just needed to put this at the top of my <code>/home/chris/.zshrc</code> file: <code>cd /usr/local/someplace</code> (put this in <code>.bashrc</code> for you bash users).  </p>
+<p>You <strong>can't</strong> put it in your <code>.profile</code> because <code>cd</code> is built into your actual shell.  If you don't believe me then run <code>man bash</code> and you will see something like</p>
+<p>[code]<br />
+BASH_BUILTINS(1)                                              BASH_BUILTINS(1)<br />
+NAME<br />
+       bash, :, ., [, alias, bg, bind, break, builtin, caller, cd, command, ...<br />
+[/code]</p>

@@ -1,0 +1,14 @@
+---
+layout: post
+title: Dumping a remote mysql database to local machine over SSH
+categories:
+- databases
+tags:
+- mysql
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p><code>ssh user@hostname "mysqldump -u user -p database | gzip -c" &gt; database.sql.gz</code></p>

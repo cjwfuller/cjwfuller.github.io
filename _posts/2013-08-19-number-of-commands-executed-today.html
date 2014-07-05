@@ -1,0 +1,30 @@
+---
+layout: post
+title: Number of commands executed today
+categories:
+- bash
+- linux
+- os x
+- zsh
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  geo_public: '0'
+  _publicize_pending: '1'
+author: 
+---
+<p>I was interested to see how many commands I executed in the current given day.  Solutions for <code>zsh</code> and <code>bash</code> are a little different:</p>
+<h3>zsh</h3>
+<p>[code lang="bash"]<br />
+fc -l -i 1 | grep $(date +&quot;%Y-%m-%d&quot;) | wc -l<br />
+[/code]</p>
+<p>You would think <code>history</code> would have done the trick but I couldn't get the timestamps working in <code>zsh</code> so I had to use <code>fc</code> (I think <code>fc</code> means Fix Command).</p>
+<h3>bash</h3>
+<p>Bash is a little easier but you need to make sure you have <code>HISTTIMEFORMAT</code> set so the <code>history</code> command shows timestamps:</p>
+<p>[code lang="bash"]<br />
+export HISTTIMEFORMAT=&quot;%Y-%m-%d &quot;<br />
+history | grep $(date +&quot;%Y-%m-%d&quot;) | wc -l<br />
+[/code]</p>
+<p>Important!  If <code>HISTTIMEFORMAT</code> was not set before then you will need to be patient because your commands before the time that you set the <code>HISTTIMEFORMAT</code> will be timestamped with the time that you set it so it will probably like you have executed more commands than you have today.</p>

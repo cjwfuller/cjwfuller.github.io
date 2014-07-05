@@ -1,0 +1,16 @@
+---
+layout: post
+title: Copying a large file over SSH using GZIP
+categories:
+- ssh
+tags: []
+status: publish
+type: post
+published: true
+meta: {}
+author: 
+---
+<p>The following will copy a file from a remote server to your local machine:</p>
+<p><code>ssh some-user@some-host gzip -c /path/to/remote/file/to/compress compressed_file.gz</code></p>
+<p>On my server, I have a user 'some-user' that is a sudoer.  Some files on my server are only accessible by root so if I want to get these files to my local machine, I need to send the sudo command to the remote server:</p>
+<p><code>ssh some-user@some-host "echo 'gzip -c /path/to/remote/file/to/compress' | sudo sh" &gt; compressed_file.gz</code></p>

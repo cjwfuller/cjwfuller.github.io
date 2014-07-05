@@ -1,0 +1,55 @@
+---
+layout: post
+title: Hello SOAP client/server & WDSL
+categories:
+- php
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _publicize_pending: '1'
+  _wpas_done_2423645: '1'
+  publicize_reach: a:2:{s:7:"twitter";a:1:{i:2423642;i:62;}s:2:"wp";a:1:{i:0;i:0;}}
+  publicize_twitter_user: cjwfuller
+  _wpas_done_2423642: '1'
+  _publicize_done_external: a:1:{s:7:"twitter";a:1:{i:62120358;b:1;}}
+  _wpas_skip_2423642: '1'
+  _wpas_skip_2423645: '1'
+  tagazine-media: a:7:{s:7:"primary";s:0:"";s:6:"images";a:0:{}s:6:"videos";a:0:{}s:11:"image_count";i:0;s:6:"author";s:8:"31481018";s:7:"blog_id";s:8:"32105191";s:9:"mod_stamp";s:19:"2013-02-05
+    07:49:49";}
+author: 
+---
+<p>I wanted to learn about SOAP in PHP but I couldn't find any complete examples. This post provides a Hello SOAP client/server implementation and uses a WDSL example from <a href="http://www.phpeveryday.com/articles/Web-Services-WSDL-Sample-WSDL-Document-P478.html" title="here">here</a>.</p>
+<p><strong>Server:</strong></p>
+<pre>
+ini_set("soap.wsdl_cache_enabled", "0");
+$server = new SoapServer('hello.wsdl');
+
+function doHello($name) {
+   return "Hello $name";
+}
+
+$server-&gt;AddFunction('doHello');
+$server-&gt;handle();
+</pre>
+<p><strong>Client:</strong></p>
+<pre>
+ini_set("soap.wsdl_cache_enabled", "0"); 
+$client = new SoapClient("http://localhost/hello.wsdl"); 
+$my_name = "Chris"; 
+$response = $client-&gt;doHello( $my_name );
+print("SOAP server response: $response");
+</pre>
+<p><strong>WDSL:</strong></p>
+<p>See <a href="http://www.phpeveryday.com/articles/Web-Services-WSDL-Sample-WSDL-Document-P478.html" title="here">here</a>.</p>
+<p><strong>Notes:</strong></p>
+<p>I kept noticing: </p>
+<pre>
+ini_set("soap.wsdl_cache_enabled", "0");
+</pre>
+<p>Make sure you change the SOAP address in your WDSL file to the location of your server.  The tag you're looking for is soap:address Here's what I changed mine to:</p>
+<pre>
+soap:address location="http://localhost/hello_soap_server.php"
+</pre>
+<p>This is my first SOAP experiment so I haven't run into any problems but apparently PHP can cache WDSL files so if one updates the server code and WDSL with new function(s), without this line, the client could fail to see the new function(s) with an older (cached) WDSL file.  </p>

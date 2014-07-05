@@ -1,0 +1,79 @@
+---
+layout: post
+title: If you can’t explain it simply, you don’t understand it well enough
+categories:
+- programming
+- sorting
+tags: []
+status: draft
+type: post
+published: false
+meta:
+  geo_public: '0'
+author: 
+---
+<p>This is what Albert Einstein once said.  On the other hand, apparently he also said</p>
+<blockquote><p>If I could explain it to the average person, I wouldn't have been worth the Nobel Prize</p></blockquote>
+<p>Source: <a href="http://skeptics.stackexchange.com/questions/8742/did-einstein-say-if-you-cant-explain-it-simply-you-dont-understand-it-well-en" title="http://skeptics.stackexchange.com/questions/8742/did-einstein-say-if-you-cant-explain-it-simply-you-dont-understand-it-well-en" target="_blank">http://skeptics.stackexchange.com/questions/8742/did-einstein-say-if-you-cant-explain-it-simply-you-dont-understand-it-well-en</a></p>
+<p>I'm going to be refreshing my knowledge of Algorithms and Data Structures and I'll be explaining them simply as I can in a series of blog posts.  I'm going to be covering Sorting, Searching and Data Structures (in that order).</p>
+<p>Let's start with one of the easiest sorting algorithms: Bubble Sort.</p>
+<h2>Bubble Sort</h2>
+<p>Bubble sort works by repeatedly stepping through the list to be sorted, comparing each adjacent element and swapping them if they're in the wrong order.</p>
+<h3>Example</h3>
+<p>Input: 5, 3, 2, 8, 4, 1:</p>
+<h4>Iteration 1</h4>
+<p><strong>5, 3</strong>, 2, 8, 4, 1<br />
+3, <strong>5, 2</strong>, 8, 4, 1 - swapped<br />
+3, 2, <strong>5, 8</strong>, 4, 1<br />
+3, 2, 5, <strong>8, 4</strong>, 1 - swapped<br />
+3, 2, 5, 4, <strong>8, 1</strong> - swapped<br />
+3, 2, 5, 4, <strong>1, 8</strong></p>
+<p>So now we have passed through the whole list once.  Two things to note:</p>
+<ul>
+<li>The largest number 8 is the largest number in the list and we can see it has 'bubbled' up to the end.  This is how Bubble Sort gets its same</li>
+<li>More importantly, remember we said 'remember that a swap occurred' above?  Well, the algorithm carries on until we don't record any swapping i.e. until the list is sorted.</li>
+</ul>
+<p>Let's do the same as before on our partially sorted list.</p>
+<h4>Iteration 2</h4>
+<p><strong>3, 2</strong>, 5, 4, 1, 8 - swapped<br />
+2, <strong>3, 5</strong>, 4, 1, 8<br />
+2, 3, <strong>5, 4</strong>, 1, 8 - swapped<br />
+2, 3, 4, <strong>5, 1</strong>, 8 - swapped<br />
+2, 3, 4, 1, <strong>5, 8</strong></p>
+<p>Again, notice that the second largest element of 5 has bubbled up through the array.  We recorded that a swap occurred so we continue applying the algorithm to the new array:</p>
+<h4>Iteration 3</h4>
+<p><strong>2, 3</strong>, 4, 1, 5, 8<br />
+2, <strong>3, 4</strong>, 1, 5, 8<br />
+2, 3, <strong>1, 4</strong>, 5, 8 - swapped<br />
+2, 3, 1, <strong>4, 5</strong>, 8<br />
+2, 3, 1, 4, <strong>5, 8</strong></p>
+<p>We recorded that a swap occurred so we continue:</p>
+<h4>Iteration 4</h4>
+<p><strong>2, 3</strong>, 1, 4, 5, 8<br />
+2, <strong>1, 3</strong>, 4, 5, 8 - swapped<br />
+2, 1, <strong>3, 4</strong>, 5, 8<br />
+2, 1, 3, <strong>4, 5</strong>, 8<br />
+2, 1, 3, 4, <strong>5, 8</strong></p>
+<p>We're nearly there, only the 2 and 1 are the wrong way now so we're one iteration away from having a sorted list:</p>
+<h4>Iteration 5</h4>
+<p><strong>2, 1</strong>, 3, 4, 5, 8<br />
+1, <strong>2, 3</strong>, 4, 5, 8  - swapped<br />
+1, 2, <strong>3, 4</strong>, 5, 8<br />
+1, 2, 3, <strong>4, 5</strong>, 8<br />
+1, 2, 3, 4, <strong>5, 8</strong></p>
+<p>It looks sorted but a swap was recorded so the algorithm passes through the data once more</p>
+<h4>Iteration 6</h4>
+<p><strong>1, 2</strong>, 3, 4, 5, 8<br />
+1, <strong>2, 3</strong>, 4, 5, 8<br />
+1, 2, <strong>3, 4</strong>, 5, 8<br />
+1, 2, 3, <strong>4, 5</strong>, 8<br />
+1, 2, 3, 4, <strong>5, 8</strong></p>
+<p>No swaps occurred so our list must be sorted.</p>
+<h3>Computational Complexity</h3>
+<p>Worst performance: O(n^2)<br />
+Best performance: O(n)<br />
+Average performance: O(n^2)<br />
+Space (worst): O(1) auxiliary</p>
+<p>So the complexity isn't great.  There are sorting algorithms with better worse and average complexities.  Bubble sort is not practical for large data sets.  One advantage that Bubble Sort has over Quicksort (not insertion sort) is that the algorithm has the ability to detect that the list is sorted built into the algorithm.</p>
+<h3>Code (PHP)</h3>
+<p>See my GitHub Gist: <a href="https://gist.github.com/cjwfuller/8805887" title="https://gist.github.com/cjwfuller/8805887" target="_blank">https://gist.github.com/cjwfuller/8805887</a></p>
