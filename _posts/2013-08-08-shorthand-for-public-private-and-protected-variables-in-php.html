@@ -11,22 +11,23 @@ published: true
 meta:
 author: 
 ---
-<p>I realised today that you can do this:<br />
-[code lang="php"]<br />
-class Monster {<br />
-    private<br />
-        $colour;<br />
-    public<br />
-        $size,<br />
-        $isEvil;<br />
-}<br />
-[/code]<br />
+<p>I realised today that you can do this:
+<pre>
+class Monster {
+    private
+        $colour;
+    public
+        $size,
+        $isEvil;
+}
+</pre>
 instead of this:</p>
-<p>[code lang="php"]<br />
-class Monster {<br />
-    private $colour;<br />
-    public $size,<br />
-    public $isEvil;<br />
-}<br />
-[/code]<br />
+<p>
+<pre>
+class Monster {
+    private $colour;
+    public $size,
+    public $isEvil;
+}
+</pre>
 in PHP which cool. It reminds me of C++. I guess it can come in handy if you have many variables that are all private or all protected, ...</p>

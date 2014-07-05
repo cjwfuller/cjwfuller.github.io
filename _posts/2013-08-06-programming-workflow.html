@@ -20,7 +20,7 @@ author:
 <p>which broadcasts keyboard input to all panes at once. When I'm wearing my SysAdmin hat I often want 4 ssh sessions each in its own pane: editor, logs, logs and more logs.  Broadcasting input makes this easy.</p>
 <p><strong>Shell: Z shell (zsh)</strong></p>
 <p>Bash is the more standard choice. I use zsh because of its auto-corrections and because of the popular GitHub repo oh-my-zsh: <a href="https://github.com/robbyrussell/oh-my-zsh">https://github.com/robbyrussell/oh-my-zsh</a> which is a framework for managing zsh plugins. There are some really nice oh-my-zsh themes. My favourite is agnoster:</p>
-<p><a href="http://cjwfuller.files.wordpress.com/2013/08/screenshot.png"><img class="alignnone size-medium wp-image-164" alt="zsh - agnoster" src="assets/screenshot.png?w=300" width="300" height="163" /></a></p>
+<p><a href="/assets/zsh.png"><img class="alignnone size-medium wp-image-164" alt="zsh - agnoster" src="/assets/zsh.png" width="300" height="163" /></a></p>
 <p><strong>Shell tricks:</strong></p>
 <pre>ctrl+r</pre>
 <p> is the most useful thing ever. If you half remember a command or can't be bothered to write a long command again then ctrl+r will search through your commands and when your previous command is found, just hit enter and the command will re-execute. I often want to change the command slightly so I often press an arrow key and edit the command before I hit enter. This beats my old method: history | grep some-command, getting the command number (say 182) and pasting the command (!182) (although this is sometimes useful too).</p>
@@ -39,9 +39,10 @@ grep ---recursive --line-number foo .
 <p><strong>Editor: vim</strong></p>
 <p>I'm not going to start another editor war but I will post this link: <a href="http://www.rudism.com/s/vimcreep">http://www.rudism.com/s/vimcreep</a>.</p>
 <p><strong>Version control: git and tig</strong></p>
-<p>I use git for everything now. I version control my documents as well as my source code. I use Bitbucket for my private repos (because it's free) and GitHub for open source stuff. One powerful git command is git add -p &lt;my file&gt;. This command interactively goes through the changes in your file and asks you whether you want to stage each part of the file or not.</p>
+<p>I use git for everything now. I version control my documents as well as my source code. I use Bitbucket for my private repos
+(because it's free) and GitHub for open source stuff. One powerful git command is <code>git add -p <my file></code>. This command interactively goes through the changes in your file and asks you whether you want to stage each part of the file or not.</p>
 <p>tig is a nice text-mode interface for git:</p>
-<p>[caption id="attachment_163" align="alignnone" width="300"]<a href="http://cjwfuller.files.wordpress.com/2013/08/screen-shot-2013-08-06-at-12-43-22.png"><img class="size-medium wp-image-163" alt="tig" src="assets/screen-shot-2013-08-06-at-12-43-22.png?w=300" width="300" height="174" /></a> tig[/caption]</p>
+<p><a href="/assets/tig.png"><img class="size-medium wp-image-163" alt="tig" src="/assets/tig.png" width="300" height="174" /></a> </p>
 <p><strong>Multiple dev machines</strong></p>
 <p>I work on a couple of different machines but I often tweak my .vimrc on one machine but then want it on another too. I have a vim-settings repo on GitHub with a simple deploy script to configure vim for a new machine: <a href="https://github.com/cjwfuller/vim-settings">https://github.com/cjwfuller/vim-settings</a></p>
 <p><strong>How can you improve your workflow?</strong></p>
