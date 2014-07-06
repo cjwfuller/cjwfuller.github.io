@@ -1,0 +1,35 @@
+---
+layout: post
+title: Installing PyQt4 in OS X
+categories:
+- ssh
+tags:
+- ssh
+status: publish
+type: post
+published: true
+meta:
+author:
+---
+The following all worked when I installed PyQt4:
+{% highlight bash linenos %}
+brew update
+brew install pyqt
+brew test pyqt
+{% endhighlight %}
+Line 3 is a test that shows a small Qt GUI (this worked).  However, I could not import the module:
+{% highlight python %}
+python
+>>> import PyQt4
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+No module named PyQt4
+{% endhighlight %}
+I think it was because I have multiple versions of Python on this old system.  Python was probably installed with MacPorts (or something)
+and also brew.  Running the following fixed the problem:
+{% highlight bash %}
+brew link python
+{% endhighlight %}
+this will ensure that <pre>which python</pre> points to the brew Python which is the Python being used to run
+<pre>brew test pyqt</pre>
+which we know works.
