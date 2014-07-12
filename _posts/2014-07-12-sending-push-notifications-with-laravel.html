@@ -1,0 +1,36 @@
+---
+layout: post
+title: Sending iOS push notifications with Laravel
+categories:
+- ssh
+tags:
+- ssh
+status: publish
+type: post
+published: true
+meta:
+author:
+---
+<p>
+With this handy package you can send iOS and Android push notifications from your Laravel app: <a
+href="https://github.com/davibennun/laravel-push-notification">davibennun/laravel-push-notification</a>.
+</p>
+<p>
+Following the Installation and Configuration instructions get you up and running but bear this in mind:
+</p>
+<strong>NO</strong>
+{% highlight php linenos %}
+PushNotification::app('your.appname')
+	->to('your device token goes in this method call')
+	->send('Hello World');
+{% endhighlight %}
+<strong>YES</strong>
+{% highlight php linenos %}
+PushNotification::app('your.appname')
+	->to('yourdevicetokengoesinthismethodcall')
+	->send('Hello World');
+{% endhighlight %}
+Otherwise you'll get something like this:
+{% highlight php %}
+Adapter Apns does not supports tokens device
+{% endhighlight %}
