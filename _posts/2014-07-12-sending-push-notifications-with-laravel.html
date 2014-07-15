@@ -34,3 +34,6 @@ Otherwise you'll get something like this:
 {% highlight php %}
 Adapter Apns does not supports tokens device
 {% endhighlight %}
+<strong>Update (15/07/2014)</strong>
+Also, make sure you do not include the <code><</code> and <code>></code> characters in your token.  It seems that leaving in
+<code><</code>s and <code>></code>s is allowed in some Ruby Gems I've tried but not in this Laravel package.
