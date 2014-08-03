@@ -1,0 +1,23 @@
+---
+layout: post
+title: Connecting to Samba without prompts
+categories:
+- smblient
+tags:
+- smbclient
+status: publish
+type: post
+published: true
+meta:
+author:
+---
+This is the command I use to connect to a Samba share that prompts you for a password:
+{% highlight bash %}
+smbclient -U mycompany/myusername //myshare -D my/directory
+Password:
+{% endhighlight %}
+If you do not want to be prompted for the password, it turns out that you can use the <code>-U</code> flag like this:
+{% highlight bash %}
+smbclient -U 'mycompany/myusername%mypassword' //myshare -D my/directory
+{% endhighlight %}
+Of course, remember that this will mean that your password will be shown in your shell history.
