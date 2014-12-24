@@ -1,0 +1,27 @@
+---
+layout: post
+title: Git  - files modified compared to origin
+categories:
+-
+tags: 
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+---
+To get a summary of lines modified compared to origin:
+{% highlight bash %}
+git fetch origin
+git diff --stat origin/master
+{% endhighlight %}
+
+Example output:
+{% highlight bash %}
+TODO                          | 8 ++++----
+gate.py                       | 8 ++++++--
+tests/test_gate.py            | 8 +++++++-
+tests/test_quantum_circuit.py | 5 ++---
+4 files changed, 19 insertions(+), 10 deletions(-)
+{% endhighlight %}
