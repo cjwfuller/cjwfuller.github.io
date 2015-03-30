@@ -1,0 +1,37 @@
+---
+layout: post
+title: Artisan Tinker - Getting command history
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+---
+Artisan Tinker is an Artisan command.  You can view its source <a href="https://github.com/laravel/framework/blob/4.2/src/Illuminate/Foundation/Console/TinkerCommand.php#L27">here</a>.  TinkerCommand contains the following:
+{% highlight php %}
+public function fire()
+{
+	if ($this->supportsBoris())
+	{
+		$this->runBorisShell();
+	}
+	else
+	{
+		$this->comment('Full REPL not supported. Falling back to simple shell.');
+		$this->runPlainShell();
+	}
+}
+{% endhighlight %}
+
+so it uses the Boris shell (if supported).  <a href="https://github.com/borisrepl/boris/blob/master/lib/Boris/Boris.php#L13">Boris.php</a> contains an private property called <code>$historyFile</code>.  If you look at where Boris is instantiated, you'll probably find that the history file is located in <code>~/.boris_history</code>:
+
+{% highlight bash %}
+cat ~/.boris_history
+_HiStOrY_V2_
+User::all()->toArray();
+exit;
+{% endhighlight %}
