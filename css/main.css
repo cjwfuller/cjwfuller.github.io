@@ -44,7 +44,7 @@ a:visited { color: #205caa; }
   border-top: 5px solid #00008B;
   border-bottom: 1px solid #e8e8e8;
   min-height: 56px;
-  background-color: white;
+  background-color: #f7f8f9;
 }
 
 .site-title,
@@ -120,6 +120,10 @@ a:visited { color: #205caa; }
   font-size: 15px;
   letter-spacing: -.3px;
   color: #828282;
+}
+
+.site-footer {
+	background-color: #f7f8f9;
 }
 
 .github-icon-svg,
