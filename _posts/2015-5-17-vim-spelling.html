@@ -13,8 +13,13 @@ author:
 ---
 Turn on spelling in vim with: <code>set spell</code>.  To turn it off: <code>set nospell</code>
 <p>
-	American English was the default language when I switched spelling on.  You can change languages with: <code>set spell spelllang=en_gb</code> (British English).  You can find the spellings in a spell directory:
+	American English was the default language when I switched spelling on.  You can change languages with: <code>set spell spelllang=en_gb</code> (British English).
 </p>
+
+To add a word to your personal dictionary, navigate to the word you want to add and type: <code>zg</code>
+<p>
+	To do the opposite and mark a word as incorrect, navigate to the word and type: <code>zw</code>
+</p>  You can find your changes in the spell directory:
 <pre>
 cat ~/.vim/spell
 lang=en_GB
@@ -26,10 +31,6 @@ rebase
 commit's
 TODO
 </pre>
-To add a word to your personal dictionary, navigate to the word you want to add and type: <code>zg</code>
-<p>
-	To do the opposite and mark a word as incorrect, navigate to the word and type: <code>zw</code>
-</p>
 <p>
 	To see a list of suggested words, navigate to the word you want help with and type: <code>z=</code>
 </p>
