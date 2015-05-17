@@ -1,0 +1,44 @@
+---
+layout: post
+title: Vim - Spelling
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+---
+Turn on spelling in vim with: <code>set spell</code>.  To turn it off: <code>set nospell</code>
+<p>
+	American English was the default language when I switched spelling on.  You can change languages with: <code>set spell spelllang=en_gb</code> (British English).  You can find the spellings in a spell directory:
+</p>
+<pre>
+cat ~/.vim/spell
+lang=en_GB
+qubit
+gvim
+Rebase
+fixup
+rebase
+commit's
+TODO
+</pre>
+To add a word to your personal dictionary, navigate to the word you want to add and type: <code>zg</code>
+<p>
+	To do the opposite and mark a word as incorrect, navigate to the word and type: <code>zw</code>
+</p>
+<p>
+	To see a list of suggested words, navigate to the word you want help with and type: <code>z=</code>
+</p>
+<p>
+	To jump between misspelled words, type: <code>]s</code> and <code>s]</code>
+</p>
+<p>
+	To turn on spelling for files with certain extensions (LaTeX .tex files): <code>autocmd BufNewFile,BufRead *.tex set spell spelllang=en_gb</code>
+</p>
+<p>
+	For more help: <code>:help spell</code>
+</p>
