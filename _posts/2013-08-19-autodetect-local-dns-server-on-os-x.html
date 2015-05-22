@@ -9,6 +9,7 @@ published: false
 meta:
   geo_public: '0'
 author: 
+comments: true
 ---
 <p>My home router came with its default gateway set to <code>192.168.1.1</code>.  When I'm at work, the company's default gateway is different (<code>192.168.0.1</code>).  This caused my machine to get confused because it had a hardcoded DNS server in the Network settings!  My immediate thought was to set my DNS servers to use Google DNS (<code>8.8.8.8</code> and <code>8.8.4.4</code>) which meant I could resolve remote sites but then this also meant my machine didn't know where to look for local DNS entries in the office and on my home LAN.</p>
 <p>All you need to do is to NOT specify a DNS server in your settings and OS X will just use its default gateway:</p>
