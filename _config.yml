@@ -6,6 +6,7 @@ baseurl: ""
 url: "http://blog.cjwfuller.com"
 twitter_username: cjwfuller
 github_username:  cjwfuller
+paginate: 10
 
 # Build settings
 markdown: kramdown
