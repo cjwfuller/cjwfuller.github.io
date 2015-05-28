@@ -420,3 +420,32 @@ h1, h2, h4, h5, h6 {
 h3 {
 	margin-top: 0px !important;
 }
+
+#mc_embed_signup{
+	background:#fff;
+	clear:left;
+	font:14px Helvetica,Arial,sans-serif;
+}
+
+#mc_embed_signup .mc-field-group input {
+	width: 300px;
+	font-size: 1.1em;
+	padding-left: 4px;
+	line-height: 1.7em;
+	float: left;
+	height: 34px;
+	margin-top: 10px;
+}
+
+#mc-embedded-subscribe {
+	border-radius: 3px;
+	border: 3px solid #205caa;
+	cursor: pointer;
+	height: 37px;
+	background-color: #00008B;
+	color: white;
+	font-size: 1.2em;
+	padding: 5px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
