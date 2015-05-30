@@ -1,7 +1,7 @@
 # Site settings
-title: Chris Fuller
+title: Chris Fuller - Tech Blog
 email: chris at cjwfuller dot com
-description: "Personal blog built with Jekyll"
+description: "Tech blog built with Jekyll"
 baseurl: ""
 url: "http://cjwfuller.github.io"
 twitter_username: cjwfuller
