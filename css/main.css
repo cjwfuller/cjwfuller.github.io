@@ -408,3 +408,15 @@ a:visited { color: #205caa; }
     margin: 0 0 15px; }
 
 }
+
+img {
+	margin-top: -10px !important;
+}
+
+h1, h2, h4, h5, h6 {
+	margin-top: -10px !important;
+}
+
+h3 {
+	margin-top: 0px !important;
+}

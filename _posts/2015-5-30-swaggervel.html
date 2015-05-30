@@ -1,0 +1,156 @@
+---
+layout: post
+title: Swagger and Swaggervel
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<h2>Swaggervel (Swagger PHP and Swagger UI in Laravel)</h2>
+<h3>Introduction</h3>
+<p>The [Swaggervel]<i> "package combines swagger-php and swagger-ui into one Laravel-friendly package"</i> - <a href="https://github.com/slampenny/Swaggervel">https://github.com/slampenny/Swaggervel</a>.</p>
+I couldn't get the installation working with Laravel 4.1 due to dependency problems but it worked fine upgrading to Laravel 4.2 (see upgrade guide <a href="http://laravel.com/docs/4.2/upgrade#upgrade-4.2">here</a>).
+<p>Swagger allows you to create API documentation like this (taken from swagger-ui pet store example <a href="http://petstore.swagger.io/">here</a>):</p>
+<img src="/assets/swagger.png" alt="Screenshot of Swagger UI" style="width: 85%;"></img>
+<p style="margin-top: -10px;">
+<a href="https://github.com/zircote/swagger-php">Swagger-php</a> is used for annotating Laravel code and creating JSON that can be used by <a href="https://github.com/swagger-api/swagger-ui">swagger-ui</a> to generate HTML documentation.
+</p>
+<h3>Installation</h3>
+Add the package to <code>composer.json</code>:
+<pre>"jlapp/swaggervel": "1.0.*@dev"</pre>
+and do the following (taken from <a href="https://github.com/slampenny/Swaggervel">GitHub page</a>):
+<p>
+Add <code>Jlapp\Swaggervel\SwaggervelServiceProvider</code> to your providers array in <code>app/config/app.php</code> above your routes provider (to avoid catch all routes).</p>
+<p>Run <code>php artisan vendor:publish</code> to push config files to your app folder.</p>
+<h3>Running</h3>
+Access Swagger UI to see your controller changes: <code>http[s]://your-api-endpoint.com/api-docs</code>.  You can see the JSON that is generated too: <code>http[s]/your-api-endpoint.com/docs</code>.
+<p>You can see your changes on page load if <code>generateAlways</code> is set to <code>true</code> in <code>app/config/packages/jlapp/swaggervel/app.php</code>.  In production you will want to turn this option off in your local configuration.  If you want to manually generate the documentation then run swagger on your code:</p>
+<pre>
+./vendor/bin/swagger app/ -o app/storage/docs/
+</pre>
+<h3>Controller Annotation</h3>
+You can get a Swaggervel API call working by adding some annotation to a single controller class.  The following example shows how to document two API calls for a fictional "animal API":
+<pre>
+use Swagger\Annotations as SWG;
+
+/**
+ * @SWG\Resource(
+ * 	apiVersion="1.0",
+ *	resourcePath="/animal",
+ *	description="Animal operations",
+ *	produces="['application/json']"
+ * )
+ */
+class AnimalController extends \BaseController {
+
+	/**
+	 * @SWG\Api(
+	 * 	path="/animals",
+	 *      @SWG\Operation(
+	 *      	method="GET",
+	 *      	summary="Fetch animals"
+	 *   	)
+	 * )
+	 */
+	public function index()
+	{
+		// index code
+	}
+
+	/**
+	 * @SWG\Api(
+	 * 	path="/animal/{animal_id}",
+	 *      @SWG\Operation(
+	 *      	method="GET",
+	 *   		summary="Displays an animal",
+	 *		@SWG\Parameter(
+	 *			name="animal_id",
+	 *			description="id of animal to fetch",
+	 *			paramType="path",
+	 *      		required=true,
+	 *      		allowMultiple=false,
+	 *      		type="integer"
+	 *      	),
+	 *		@SWG\ResponseMessage(code=404, message="Animal not found")
+	 * 	)
+	 * )
+	 */
+	public function show()
+	{
+		// show code
+	}
+}
+</pre>
+Above shows five annotation types: <code>@SWG\Resource</code>, <code>@SWG\Api</code>, <code>@SWG\Operation</code>, <code>@SWG\Parameter</code> and <code>@SWG\ResponseMessage</code>.  Make sure you get the hierarchy correct, it should be like this:
+<pre>
+- @SWG\Resource
+  - @SWG\Api
+    - @SWG\Operation
+      - @SWG\Parameter
+      - @SWG\ResponseMessage
+</pre>
+<h3>Model Annotation</h3>
+You can use model annotation to document what an Animal is:
+<pre>
+use Swagger\Annotations as SWG;
+
+/**
+ * @SWG\Model(
+ * 	id="Animal",
+ * 	@SWG\Property(name="id", type="integer", required=true),
+ * 	@SWG\Property(name="slug", type="string", required=true),
+ * 	@SWG\Property(name="name", type="string", required=true),
+ * 	@SWG\Property(name="carnivore", type="boolean", required=false),
+ * 	@SWG\Property(name="obligate_carnivore", type="boolean", required=false),
+ *	...
+ *	...
+ * )
+ */
+class Animal extends Eloquent implements AnimalInterface {
+
+	// model implementation
+}
+</pre>
+Add the <code>type</code> to your controller annotation like this:
+<pre>
+/**
+ * @SWG\Api(
+ * 	path="/animal/{animal_id}",
+ *      @SWG\Operation(
+ *      	method="GET",
+ *   		summary="Displays an animal",
+ *		<strong>type="Animal"</strong>,
+ *		@SWG\Parameter(
+ *			name="animal_id",
+ *			description="id of animal to fetch",
+ *			paramType="path",
+ *      		required=true,
+ *      		allowMultiple=false,
+ *      		type="integer"
+ *      	),
+ *		@SWG\ResponseMessage(code=404, message="Animal not found")
+ * 	)
+ * )
+ */
+public function show()
+{
+	// show code
+}
+</pre>
+<p>This will show a Model link in Swagger UI so API consumers can understand what an Animal looks like.</p>
+<h3>Final notes</h3>
+I have found that using Swagger is pretty neat because:
+<ul>
+	<li>It's easier to keep API documentation up to date - better than a wiki</li>
+	<li>The 'Try it out!' buttons have proven to be useful for API consumers - easier than using a REST client and wiki documentation</li>
+	<li>Swagger UI has API key integration</li>
+	<li>There are SDK generators: <a href="https://github.com/swagger-api/swagger-codegen">https://github.com/swagger-api/swagger-codegen</a></li>
+	<li>It's open source</li>
+	<li>It's not just for PHP (Clojure, Go, Java, Python and many more: <a href="https://github.com/swagger-api/swagger-spec#additional-libraries">https://github.com/swagger-api/swagger-spec#additional-libraries</a>)</li>
+</ul>
