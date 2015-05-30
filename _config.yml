@@ -1,7 +1,7 @@
 # Site settings
 title: Chris Fuller - Tech Blog
 email: <a href="mailto:chris@cjwfuller.com">chris@cjwfuller.com</a>
-description: Tech blog built with <a href="http://jekyllrb.com/">Jekyll</a>
+description: "Tech blog built with Jekyll"
 baseurl: ""
 url: "http://blog.cjwfuller.com"
 twitter_username: cjwfuller
