@@ -18,10 +18,10 @@ Turn on spelling in vim with: <code>set spell</code>.  Turn it off with: <code>s
 	American English was the default language when I switched spelling on.  You can change languages with: <code>set spell spelllang=en_gb</code> (British English).
 </p>
 <p>
-	Sometimes you might want to turn spelling on for a single buffer (e.g. when modifying a README file).  Use <code>setlocal spell</code> to achieve this.
+	To turn on spelling for files with certain extensions (LaTeX .tex files): <code>autocmd BufNewFile,BufRead *.tex set spell spelllang=en_gb</code>.
 </p>
 <p>
-	To turn on spelling for files with certain extensions (LaTeX .tex files): <code>autocmd BufNewFile,BufRead *.tex set spell spelllang=en_gb</code>.
+	Sometimes you might want to turn spelling on for a single buffer (e.g. when modifying a README file).  Use <code>setlocal spell</code> to achieve this.
 </p>
 <h2>Word Completion</h2>
 <p>
