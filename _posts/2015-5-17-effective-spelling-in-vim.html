@@ -1,0 +1,62 @@
+---
+layout: post
+title: Effective spelling in Vim
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<h2>Turn spelling on/off</h2>
+Turn on spelling in vim with: <code>set spell</code>.  To turn it off: <code>set nospell</code>
+<p>
+	American English was the default language when I switched spelling on.  You can change languages with: <code>set spell spelllang=en_gb</code> (British English).
+</p>
+<p>
+	Sometimes you might want to turn spelling on for a single buffer (e.g. when modifying a README file).  Use <code>setlocal spell</code> to achieve this.
+</p>
+<p>
+	To turn on spelling for files with certain extensions (LaTeX .tex files): <code>autocmd BufNewFile,BufRead *.tex set spell spelllang=en_gb</code>.
+</p>
+<h2>Word Completion</h2>
+<p>
+When programming, I make heavy use of <code>CTRL-P</code> (see <a href="https://github.com/kien/ctrlp.vim">https://github.com/kien/ctrlp.vim</a>) in insert-mode to auto-complete words, you can do the same with spelling with: <code>set complete+=kspell</code>:
+</p>
+<p>
+	<img src="/assets/spell-autocomplete.png" alt="Vim spelling autocomplete screenshot"></img>
+</p>
+<h2>Dictionary</h2>
+To add a word to your personal dictionary, navigate to the word you want to add and type: <code>zg</code> (undo with <code>zug</code>).
+<p>
+	To do the opposite and mark a word as incorrect, navigate to the word and type: <code>zw</code> (undo with <code>zuw</code>).
+</p>
+You can find your changes in the spell directory:
+<pre>
+cat ~/.vim/spell
+lang=en_GB
+qubit
+gvim
+Rebase
+fixup
+rebase
+commit's
+TODO
+</pre>
+<p>
+	To see a list of suggested spelling corrections, navigate to the word you want help with and type: <code>z=</code>:
+</p>
+<p>
+	<img src="/assets/spell-dictionary.png" alt="Vim dictionary"></img>
+</p>
+<h2>Jump to bad words</h2>
+<p>
+	To jump between misspelled words, type: <code>]s</code> and <code>s]</code>.
+</p>
+<p>
+	For more help: <code>:help spell</code>.
+</p>
