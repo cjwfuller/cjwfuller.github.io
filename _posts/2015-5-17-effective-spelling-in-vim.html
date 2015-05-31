@@ -13,7 +13,7 @@ author:
 comments: true
 ---
 <h2>Turn spelling on/off</h2>
-Turn on spelling in vim with: <code>set spell</code>.  To turn it off: <code>set nospell</code>
+Turn on spelling in vim with: <code>set spell</code>.  Turn it off with: <code>set nospell</code>
 <p>
 	American English was the default language when I switched spelling on.  You can change languages with: <code>set spell spelllang=en_gb</code> (British English).
 </p>
@@ -36,22 +36,14 @@ To add a word to your personal dictionary, navigate to the word you want to add 
 	To do the opposite and mark a word as incorrect, navigate to the word and type: <code>zw</code> (undo with <code>zuw</code>).
 </p>
 You can find your changes in the spell directory:
-<pre>
-cat ~/.vim/spell
-lang=en_GB
-qubit
-gvim
-Rebase
-fixup
-rebase
-commit's
-TODO
-</pre>
+<p>
+	<img src="/assets/spell-dictionary-contents.png" alt="Vim dictionary contents"></img>
+</p>
 <p>
 	To see a list of suggested spelling corrections, navigate to the word you want help with and type: <code>z=</code>:
 </p>
 <p>
-	<img src="/assets/spell-dictionary.png" alt="Vim dictionary"></img>
+	<img src="/assets/spell-dictionary.png" alt="Vim dictionary screen"></img>
 </p>
 <h2>Jump to bad words</h2>
 <p>
