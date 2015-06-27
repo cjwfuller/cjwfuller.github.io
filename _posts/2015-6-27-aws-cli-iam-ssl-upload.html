@@ -13,12 +13,12 @@ author:
 ---
 <p>Uploading a new SSL certificate to Amazon Web Services with intermediate and root certifcates took some trial and error.  This kept happening: </p>
 <code>A client error (MalformedCertificate) occurred when calling the UploadServerCertificate operation: Unable to validate certificate chain. The certificate chain must start with the immediate signing certificate, followed by any intermediaries in order. The index within the chain of the invalid certificate is: -1</code> until I managed to put the certificates in the chain file in the correct order.<p>
-<p>Below are the correct operations to upload a new SSL to AWS.  The example here is for Alpha SSL but you can adapt the instructions for your SSL provider.
+<p>Below are the correct operations to upload a new SSL to AWS.  The example here is for AlphaSSL but you can adapt the instructions for your SSL provider.
 <ul>
 	<li>Save your private key that you used to purchase your SSL certificate as <code>key.pem</code>.
-	<li>Download Alpha SSL's intermediate certifcate <a href="https://www.alphassl.com/support/install-root-certificate.html">here</a>.  I used the certificate labelled <em>"SHA-256 - Orders March 31, 2014 and After"</em>.  Save as <code>intermediate.crt</code></li>
-	<li>Download Alpha SSL's root certificate <a href="https://www.alphassl.com/support/roots/root.pem">here</a>.  Save as <code>root.pem</code></li>
-	<li>Save the certifcate that Alpha SSL emailed you when you bought the SSL as <code>cert.crt</code>
+	<li>Download AlphaSSL's intermediate certifcate <a href="https://www.alphassl.com/support/install-root-certificate.html">here</a>.  I used the certificate labelled <em>"SHA-256 - Orders March 31, 2014 and After"</em>.  Save as <code>intermediate.crt</code></li>
+	<li>Download AlphaSSL's root certificate <a href="https://www.alphassl.com/support/roots/root.pem">here</a>.  Save as <code>root.pem</code></li>
+	<li>Save the certifcate that AlphaSSL emailed you when you bought the SSL as <code>cert.crt</code>
 	<li>Create the chain file: <code>cat intermediate.crt root.pem > chain.pem</code>.  This is the bit that took some trial and error.
 	<li>Upload to AWS: <code>aws iam upload-server-certificate --server-certificate-name you-domain.co.uk --certificate-chain file://chain.pem --private-key file://key.pem --certificate-body file://cert.crt</code>
 </ul>
