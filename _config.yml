@@ -1,12 +1,16 @@
 # Site settings
-title: Chris Fuller
-email: chris at cjwfuller dot com
-description: "Personal blog built with Jekyll"
+title: Chris Fuller - Tech Blog
+email: <a href="mailto:chris@cjwfuller.com">chris@cjwfuller.com</a>
+description: "Tech blog built with Jekyll"
 baseurl: ""
-url: "http://cjwfuller.github.io"
+url: "http://blog.cjwfuller.com"
 twitter_username: cjwfuller
 github_username:  cjwfuller
+paginate: 10
 
 # Build settings
 markdown: kramdown
 permalink: pretty
+
+gems:
+ - jekyll-redirect-from

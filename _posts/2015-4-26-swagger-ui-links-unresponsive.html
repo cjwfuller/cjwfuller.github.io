@@ -10,6 +10,7 @@ type: post
 published: true
 meta:
 author:
+comments: true
 ---
 <p>Swaggervel <em>"combines swagger-php and swagger-ui into one Laravel-friendly package"</em>.  See GitHub <a href="https://github.com/slampenny/Swaggervel">here</a> and Packagist: <a href="https://packagist.org/packages/jlapp/swaggervel">here</a>).</p>
 <p>After failing to set up Swaggervel in Laravel 4.1, I upgraded to 4.2 using <a href="http://laravel.com/docs/4.2/upgrade#upgrade-4.2">this</a> upgrade guide which got it (mostly) working.  Swagger UI worked to before modifying existing code annotations but occasionally, the links it generated seemed to break.  The error message sounded like jQuery wasn't loaded at first because it didn't recognise the '$' token.  However, if you opened up a raw JSON file in Chrome, some of the JSON was being stripped which made the JSON invalid.</p>

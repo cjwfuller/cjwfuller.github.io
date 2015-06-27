@@ -4,17 +4,50 @@ layout: default
 
 <div class="home">
 
+<!-- Begin MailChimp Signup Form -->
+<h4>Get fresh blog posts delivered straight to your inbox</h4>
+<div id="mc_embed_signup">
+<form action="//cjwfuller.us11.list-manage.com/subscribe/post?u=2b250a0e5d8fc2dbbf1637bda&amp;id=3be453b1ca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+    <div class="mc-field-group">
+	<input autofocus type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address">
+    </div>
+    <div style="position: absolute; left: -5000px;"><input type="text" name="b_2b250a0e5d8fc2dbbf1637bda_3be453b1ca" tabindex="-1" value=""></div>
+    <div class="clear">
+        <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+    </div>
+    </div>
+
+    <div id="mce-responses" class="clear" style="margin-bottom: 30px; margin-top: 10px;">
+        <div class="response" id="mce-error-response" style="display:none"></div>
+        <div class="response" id="mce-success-response" style="display:none"></div>
+    </div>
+</form>
+</div>
+
   <h1>Posts</h1>
 
   <ul class="posts">
-    {% for post in site.posts %}
+    {% for post in paginator.posts %}
       <li>
         <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
       </li>
     {% endfor %}
   </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  <!-- Pagination links -->
+  <div class="pagination">
+    {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
+    {% else %}
+      <span class="previous">Previous</span>
+    {% endif %}
+    <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+    {% else %}
+      <span class="next ">Next</span>
+    {% endif %}
+</div>
 
 </div>
