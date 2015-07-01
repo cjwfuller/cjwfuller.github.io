@@ -10,6 +10,7 @@ type: post
 published: true
 meta:
 author:
+comments: true
 ---
 <p>Uploading a new SSL certificate to Amazon Web Services with intermediate and root certifcates took some trial and error.  This kept happening: </p>
 <code>A client error (MalformedCertificate) occurred when calling the UploadServerCertificate operation: Unable to validate certificate chain. The certificate chain must start with the immediate signing certificate, followed by any intermediaries in order. The index within the chain of the invalid certificate is: -1</code> until I managed to put the certificates in the chain file in the correct order.<p>
