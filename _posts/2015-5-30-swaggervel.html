@@ -145,6 +145,10 @@ public function show()
 </pre>
 <p>This will show a Model link in Swagger UI so API consumers can understand what an Animal looks like.</p>
 <p>Learn more about annotations <a href="http://zircote.com/swagger-php/annotations.html">here</a>.</p>
+<h3>Tips</h3>
+<p>
+If you are running swagger from the command-line, ensure you parse both your models and controllers so you can see the models in the UI.  I.e. <code>./vendor/bin/swagger app/ -o app/storage/docs/</code> <strong>not </strong><code>./vendor/bin/swagger app/models -o app/storage/docs/</code> and <strong> not </strong><code> ./vendor/bin/swagger app/controllers -o app/storage/docs/</code>.
+</p>
 <h3>Final notes</h3>
 I have found that using Swagger is pretty neat because:
 <ul>
