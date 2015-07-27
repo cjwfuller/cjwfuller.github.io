@@ -21,7 +21,7 @@ comments: true
 	<li>Download AlphaSSL's root certificate <a href="https://www.alphassl.com/support/roots/root.pem">here</a>.  Save as <code>root.pem</code></li>
 	<li>Save the certifcate that AlphaSSL emailed you when you bought the SSL as <code>cert.crt</code>
 	<li>Create the chain file: <code>cat intermediate.crt root.pem > chain.pem</code>.  This is the bit that took some trial and error.
-	<li>Upload to AWS: <code>aws iam upload-server-certificate --server-certificate-name you-domain.co.uk --certificate-chain file://chain.pem --private-key file://key.pem --certificate-body file://cert.crt</code>
+	<li>Upload to AWS: <code>aws iam upload-server-certificate --server-certificate-name your-domain.co.uk --certificate-chain file://chain.pem --private-key file://key.pem --certificate-body file://cert.crt</code>
 </ul>
 <p>Other tips:</p>
 <ul>
