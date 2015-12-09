@@ -25,6 +25,7 @@ comments: true
 </ul>
 <p>Other tips:</p>
 <ul>
+    <li><strong>Update 9/12/2015: </strong>Ensure that you include the <code>file://</code> prefixes to avoid <code>A client error (MalformedCertificate) occurred when calling the UploadServerCertificate operation: Unable to parse certificate. Please ensure the certificate is in PEM format.</code> errors</li>
 	<li>Remember to include the <code>-----BEGIN CERTIFICATE-----</code> and <code>-----END CERTIFICATE-----</code> lines in the certificate files</li>
 	<li>Remember to include the <code>-----BEGIN RSA PRIVATE KEY-----</code> and <code>-----END RSA PRIVATE KEY-----</code> lines in the private key
 	<li>The lines in your key and certificate files should be exactly 64 characters (apart from the first and last lines)
