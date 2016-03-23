@@ -7,8 +7,6 @@ comments: false
 
 <p>This is the personal blog of Chris Fuller.</p>
 
-<p>Software Engineer at <a href="https://www.gousto.co.uk">Gousto</a> - use promocode <strong>HANNA21982</strong> to get &pound;20 off your first box!</p>
-
 <p>See my LinkedIn profile <a href="http://uk.linkedin.com/in/cjwfuller">here</a></p>
 
 <p>This blog is built with Jekyll and hosted on GitHub.  Posts before and including Aug 19, 2013 are migrated from Wordpress using <a
