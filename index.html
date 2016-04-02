@@ -31,7 +31,11 @@ layout: default
     {% for post in paginator.posts %}
       <li>
         <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        {% if post.external_url %}
+          <a class="post-link" href="{{ post.external_url }}">{{ post.title }}</a> [External]
+        {% else %}
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
