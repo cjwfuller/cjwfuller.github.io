@@ -1,0 +1,46 @@
+---
+layout: post
+title: Install the EB Command Line Interface (CLI) on RHEL-like OSs
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<p>This caused an unnecessary headache.</p>
+<p>Follow <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html#eb-cli3-install-linux">the official docs</a> set up the Elastic Beanstalk CLI tools.  The step I missed was:</p>
+<p>
+  <em>"If your Linux distribution came with Python, you may need to install the Python developer package in order to get the headers and libraries required to compile extensions and install the EB CLI. Install the developer package (typically named python-dev or python-devel) using your package manager."</em>
+</p>
+<p>If you manage to forget to do this then this happens on Amazon Linux AMI release 2016.03:</p>
+<p>
+  <code>pip install awsebcli</code>
+</p>
+  <pre>
+...
+ext/_yaml.c:8:22: fatal error: pyconfig.h: No such file or directory
+ #include "pyconfig.h"
+                      ^
+compilation terminated.
+error: command 'gcc' failed with exit status 1
+
+----------------------------------------
+Failed building wheel for pyyaml
+Running setup.py clean for pyyaml
+Failed to build pyyaml
+Installing collected packages: pyyaml
+Running setup.py install for pyyaml ... error
+...
+</pre>
+<p>
+  <code>something.h: No such file or directory</code> normally means <em>"install header files"</em> :) which are in this package:
+</p>
+<p>
+  <code>yum install python27-devel</code>
+</p>
+which fixes the issue.
