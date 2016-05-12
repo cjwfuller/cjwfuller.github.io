@@ -1,0 +1,21 @@
+---
+layout: post
+title: Using the mouse to copy from tmux in iTerm 2
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<p>Evert Pot wrote <a href="https://evertpot.com/osx-tmux-vim-copy-paste-clipboard/">this</a> great article on Making the clipboard work between iTerm2, tmux, vim and OS X.  The only thing missing from this post is how you can use the mouse from within tmux to copy to OS X's clipboard.</p>
+<p>There are two ways of doing this:</p>
+<ul>
+  <li>Bad old way: <strong>Hold down alt (⌥) and select with the mouse like you would in a normal iTerm session</strong>.  Bad because this doesn't play nicely with vertical windows - you end up copying text from two windows which is probably never what you need</li>
+  <li>Better way: <strong>Select with the mouse, and before letting go, press y to copy</strong> - game changer.  This way respects tmux windows.  This little gem was in Evert's Disqus comments (thank you <a href="https://disqus.com/by/manojlds/">Manoj Mahalingam</a>)</li>
+</ul>
+<p>tmux, you're the best</p>
