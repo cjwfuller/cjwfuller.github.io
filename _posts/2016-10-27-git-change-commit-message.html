@@ -1,0 +1,27 @@
+---
+layout: post
+title: Git - change commit message
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<p>A couple of commands that I'm always using that are super useful <strong>unless you have already pushed</strong>:</p>
+
+<p><code>git commit --amend</code> - changes your last commit message</p>
+<p>and</p>
+<p><code>git rebase -i yourcommithash~1</code> - changes some other commit message</p>
+
+<p>Details:</p>
+
+<p><code>git commit --amend</code> can be used on its own or if you don't want to get dropped into vim / emacs (whatever <code>$GIT_EDITOR</code> is set to): <code>git commit --amend -m "your new message"</code></p>
+
+<p><code>git rebase -i yourcommithash~1</code> will open your editor with the commit you want to rename and the commits before it.  Change <code>pick</code> to <code>r</code>, save and exit (don't rename the commit in the list of commits), rename the commit then and save and exit.  Done.</p>
+
+<p>This is only safe if you haven't pushed because other Developers may have pulled your old commits and you're rewriting history by doing this.</p>
