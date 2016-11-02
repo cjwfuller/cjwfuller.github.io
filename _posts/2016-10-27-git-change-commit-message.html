@@ -24,4 +24,4 @@ comments: true
 
 <p><code>git rebase -i yourcommithash~1</code> will open your editor with the commit you want to rename and the commits before it.  Change <code>pick</code> to <code>r</code>, save and exit (don't rename the commit in the list of commits), rename the commit then and save and exit.  Done.</p>
 
-<p>This is only safe if you haven't pushed because other Developers may have pulled your old commits and you're rewriting history by doing this.</p>
+<p>This is only safe if you haven't pushed because other Developers may have pulled your old commits and you're rewriting history by doing this (if it's just you working on a project and you know what you're doing, you can pass the <code>-f</code> to <code>git push</code> if you have already pushed to ignore git's no push warning).</p>
