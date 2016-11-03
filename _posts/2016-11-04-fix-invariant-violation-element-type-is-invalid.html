@@ -1,0 +1,61 @@
+---
+layout: post
+title: React - Fix Invariant Violation Element type is invalid expected a string...
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<p>
+<code>Warning: React.createElement: type should not be null, undefined, boolean, or number. It should be a string (for DOM elements) or a ReactClass (for composite components). Check the render method of `UserAlert`.</code>
+</p>
+
+<p>
+<code>Invariant Violation: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. Check the render method of `UserAlert`."</code>
+</p>
+
+<p>are slightly cryptic.  These errors can occur because of an incorrect import statement (<a href="https://codereviewvideos.com/blog/warning-react-createelement/">see here</a>) or in my case, you can make it happen in Meteor with an incorrect class definition.  My issue was that:</p>
+
+<p>
+  <code>class AccountSelector extends React.Component {</code>... - a class <strong>declaration</strong>
+</p>
+
+<p>
+  needed to be:
+</p>
+
+<p>
+  <code>AccountSelector = class extends React.Component {</code>... - a class <strong>expression</strong>
+</p>
+
+<p>The difference between a JavaScript class expression and declaration can be found <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">here</a>.</p>
+
+<p>
+  In my case, I am importing the class from another Meteor package so I also need to do
+</p>
+
+<p>
+  <pre>
+api.export([
+  'AccountSelector'
+]);</pre>
+</p>
+
+<p>in my package.js</code> file.
+
+<p>This problem can also happen in Meteor if you import a package that is already available:</p>
+
+<p><code>import NotificationPreferences from './NotificationPreferences.jsx';</code> will result in the same error if:</p>
+
+<p>
+    <pre>
+api.export([
+  'NotificationPreferences'
+]);</pre>
+</p>
