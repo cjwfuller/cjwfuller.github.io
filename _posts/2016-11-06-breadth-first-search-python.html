@@ -1,0 +1,125 @@
+---
+layout: post
+title: Breadth-first Search (BFS) with Python examples
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<p>
+  Breadth-first Search (BFS) finds the shortest paths from a given source node to all other nodes.
+</p>
+
+<p>
+  BFS uses two data structures:
+  <ol>
+    <li>A <strong>queue</strong> to keep track of nodes that have been visited but have not been visited from</li>
+    <li>The <strong>graph</strong> itself that we store as an <strong>adjacency list</strong></li>
+  </ol>
+</p>
+
+<p>The <strong>adjacency list</strong> can just be represented as a Python list.  For the <strong>queue</strong>, I'm using an implementation from a previous blog post <a href="http://blog.cjwfuller.com/2016/11/06/queue-data-structure-python">here</a>.</p>
+
+<p>
+  For a node <i>n</i>, each <i>n</i> in BFS stores two values:
+  <ol>
+    <li><strong>Distance</strong> <i>d</i> - minimum number of edges in any path from the source node to node <i>n</i></li>
+    <li><strong>Predecessor</strong> node of <i>n</i> along some shortest path from the source node.  Can also be <i>None</i> indicating that <i>n</i> has no predecessor node</li>
+  </ol>
+  We store the above in the adjacency list.
+</p>
+
+<p>
+  The initialisation parts of BFS are:
+  <ol>
+    <li>Set the distance and predecessor node to <i>None</i> for all nodes</li>
+    <li>Start the search at the source node</li>
+    <li>Assign the node a distance of <i>0</i></li>
+  </ol>
+  In Python 3:
+
+  {% highlight python %}
+def bfs(graph, source):
+  """
+  Perform breadth-first search on a graph
+
+  Args:
+    graph: The graph to perform bread-first search on.
+    source: The source node of the graph.
+
+  Returns:
+    A list of objects describing the graph.
+  """
+
+  # Step 1
+  bfsInfo = []
+  for i, _ in enumerate(graph):
+    bfsInfo[i] = {'distance': None, 'predecessor': None}
+
+  queue = Queue()
+
+  # Step 2
+  queue.enqueue(source)
+
+  # Step 3
+  bfsInfo[source]['distance'] = 0
+
+  # ... continued below
+  {% endhighlight %}
+
+  <p>Next is the main part of the algorithm:</p>
+
+  {% highlight python %}
+  while not queue.isEmpty():
+    u = queue.dequeue()
+    for i in range(len(graph[u])):
+      v = graph[u][i]
+      if bfsInfo[v]['distance'] == None:
+        # Python-specific: None + 1 will raise TypeError
+        if bfsInfo[u]['distance'] == None:
+          bfsInfo[v]['distance'] = 1
+        else:
+          bfsInfo[v]['distance'] = bfsInfo[u]['distance'] + 1
+        bfsInfo[v]['predecessor'] = u
+        queue.enqueue(v)
+
+  return bfsInfo
+{% endhighlight %}
+
+<p>Call <code>bfs</code> with an adjacency list.  Example with <i>3</i> as the source node:</p>
+
+  {% highlight python %}
+  adjList = [
+      [1],
+      [0, 4, 5],
+      [3, 4, 5],
+      [2, 6],
+      [1, 2],
+      [1, 2, 6],
+      [3, 5],
+      []
+  ]
+  bfsInfo = bfs(adjList, 3);
+  for i in range(len(adjList)):
+      print('Node ' + str(i) + ': Distance = ' + str(bfsInfo[i]['distance']) + ', Predecessor = ' + str(bfsInfo[i]['predecessor']))
+  {% endhighlight %}
+<p>Outputs:</p>
+  {% highlight python %}
+Node 0: Distance = 4, Predecessor = 1
+Node 1: Distance = 3, Predecessor = 4
+Node 2: Distance = 1, Predecessor = 3
+Node 3: Distance = 0, Predecessor = None
+Node 4: Distance = 2, Predecessor = 2
+Node 5: Distance = 2, Predecessor = 2
+Node 6: Distance = 1, Predecessor = 3
+Node 7: Distance = None, Predecessor = None
+  {% endhighlight %}
+
+
+</p>

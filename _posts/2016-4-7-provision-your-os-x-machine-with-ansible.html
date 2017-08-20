@@ -1,0 +1,21 @@
+---
+layout: post
+title: Provision your OS X machine with Ansible
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<p>Setting up a new laptop is usually a pain because you have to reinstall all your applications and configure OS X.  I decided to start using configuration management to ease the pain for next time I set up a new OS X machine.  I thought it would also be useful to start keeping track of things I have changed on the machine.</p>
+
+<p>Ansible was my choice for configuration management because its playbooks are written in YAML which has minimal syntax which keeps things simple.  Other posts go into the Ansible vs Salt vs Puppet vs Chef debate.</p>
+
+<p></p>
+
+<p>All the code is in my <a href="https://github.com/cjwfuller/ansible-os-x">GitHub</a>.  Make sure you modify the list of apps to install before you run the playbook unless you want to install all my stuff.</p>
