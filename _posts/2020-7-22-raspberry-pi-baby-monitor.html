@@ -1,0 +1,211 @@
+---
+layout: post
+title: Raspberry Pi Baby Monitor - Build Guide
+categories:
+-
+tags:
+-
+status: publish
+type: post
+published: true
+meta:
+author:
+comments: true
+---
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Built a baby cam for our newborn! Features: Night vision, temperature, humidity, keeps track of record low/high temps. Made with a Pi Zero W from <a href="https://twitter.com/Raspberry_Pi?ref_src=twsrc%5Etfw">@Raspberry_Pi</a>, brown rice, part of a broken chopping board and a pasta sauce jar <a href="https://t.co/ZfBmDrcVQN">pic.twitter.com/ZfBmDrcVQN</a></p>&mdash; Chris Fuller (@cjwfuller) <a href="https://twitter.com/cjwfuller/status/1285437968904118272?ref_src=twsrc%5Etfw">July 21, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
+I recently Tweeted about the Raspberry Pi baby monitor that I built and got heaps of comments, thanks! Here's a build guide, as promised. Apparently, the build looks like <a href="https://robotics.fandom.com/wiki/Johnny_5" target="_blank">Johnny 5</a> from the 1986 film <a href="https://www.imdb.com/title/tt0091949/" target="_blank">Short Circuit</a>. I was born after that film and haven't seen it but yeh, it kinda does.
+</p>
+<p>
+    <img src="/assets/baby-monitor-v1-1.jpg" alt="Photo of baby monitor v1 - 1 of 2" width="45%"/>
+    <img src="/assets/baby-monitor-v1-2.jpg" alt="Photo of baby monitor v1 - 2 of 2" width="45%"/>
+</p>
+<h2>Kit list</h2>
+<p>
+    <ul>
+        <li>x1 baby human</li>
+        <li>x1 Raspberry Pi. I used the Pi Zero WH, but I would strongly suggest that you use the Raspberry Pi 4 or a Pi with more than a single core. With the Pi Zero WH, the single core is almost pegged the whole time. To prevent the stream from becoming unresponsive, I have a Cron job to restart the camera stream, which works but it's not ideal. The issue is that the stream is using most of a core which makes everything else is a bit slow.</li>
+        <li>x1 Raspberry Pi Zero camera adapter if you're using the Pi Zero W (please don't). Core Electronics <a href="https://core-electronics.com.au/raspberry-pi-zero-camera-adapter.html" target="_blank">link</a></li>
+        <li>x2 bread boards. I used only 1 board start with, but the heat from the Raspberry Pi itself was causing elevated temperature readings so I had to move the sensor further away from the Pi. <a href"https://core-electronics.com.au/solderless-breadboard-300-tie-points-zy-60.html">Link</a>
+        <li>x1 Adafruit DHT22 temperature/humidity sensor. <a href="https://core-electronics.com.au/dht22-temperature-and-relative-humidity-sensor-module.html" target="_blank">Link</a></li>
+        <li>x1 ModMyPi night vision camera board. <a href="https://core-electronics.com.au/raspberry-pi-camera-board-night-vision-adjustable-focus-lens-5mp.html" target="_blank">Link</a></li>
+        <li>x1 10K &#8486; resistor. <a href="https://core-electronics.com.au/resistor-10k-ohm-1-4-watt-pth-20-pack-thick-leads.html" target="_blank">Link</a></li>
+        <li>x3 male-female jumper cables. <a href="https://core-electronics.com.au/jumper-wires-connected-6-m-f-20-pack.html" target="">Link</a></li>
+        <li>x3 male-male jumper cables. The male-male ones are just for connecting the two boards together. <a href="https://core-electronics.com.au/jumper-wires-connected-6-m-m-20-pack.html" target="">Link</a></li>
+    </ul>
+</p>
+<p>
+    My specific build also used the following, but you can probably do better:
+    <ol>
+        <li>Brown rice (any type of rice is probably compatible, but I've only tested brown). I'm using <a href="https://www.amazon.com.au/Absolute-Organic-Brown-Rice-700g/dp/B07HHH6TG2" target="_blank">this</a> rice, which is probably a bit too fancy for this use case</li>
+        <li>Part of my wooden chopping board that snapped off. Can't lend you mine, go get your own</li>
+    </ol>
+</p>
+<div style="width:100%;height:0;padding-bottom:42%;position:relative;"><iframe src="https://giphy.com/embed/lQ3gjhe0vHdC" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/robot-laser-johnny-5-lQ3gjhe0vHdC">via GIPHY</a></p>
+<h2>Temperature and humidity</h2>
+<p>
+    For the DHT22, I followed an <a href="https://pimylifeup.com/raspberry-pi-humidity-sensor-dht22/" target="_blank">article</a> from <a href="https://pimylifeup.com" target="_blank">PiMyLifeUp.com</a>. Diagram:
+</p>
+<p>
+    <img src="/assets/dht22-wiring.jpg" alt="DHT22 sensor wiring"/>
+</p>
+<p>
+    You'll notice that they've got an extra red jumper on their version - I think they just wanted to space things out a bit. I didn't bother with the extra cable but my resistor is kinda squeezed in. Their article covers the whole DHT22 set up, I'm not going to write out the same thing here.
+</p>
+<p>
+    Once you have wired everything up, let's test that it's working.
+</p>
+<p>
+    Make sure you have Python 3 and pip installed and then install the library to interface with the DHT22:
+<pre>
+sudo pip3 install Adafruit_DHT
+</pre>
+</p>
+<p>
+    Run this command to test that we're getting readings from the DHT22:
+<pre>
+import Adafruit_DHT
+
+DHT_SENSOR = Adafruit_DHT.DHT22
+Adafruit_DHT.read_retry(DHT_SENSOR, 4, retries=2)
+</pre>
+<p>
+    You should see something like:
+<pre>
+(48.400001525878906, 23.299999237060547)
+</pre>
+</p>
+<p>
+    which is the humidity and temperature respectively. You can read the full Python docs <a href="https://circuitpython.readthedocs.io/projects/dht/en/latest/" target="_blank">here</a>. If you get <code>(None, None)</code> then re-seat the jumpers and DHT22. Also, I'm using GPIO pin 4 - make sure you change the 4 to whichever GPIO pin that you're using.
+</p>
+<h3>Track record high/low temperatures</h3>
+<p>
+    This was a feature request from the wife. Also, in a future project, I would like to start tracking temperatures/humidities in all our rooms and outside, throughout the year. I have a Cron job that measures the temperature via the DHT22 every 1 minute and stores the readings in an sqlite3 database, so we can calculate record highs and lows. You'll need a few extra packages if you want this feature:
+<pre>
+pip3 install sqlite3 datetime pytz
+</pre>
+</p>
+<p>
+Create the database like this:
+<pre>
+sqlite3 /home/pi/sensors/sensors.db
+</pre>
+</p>
+<p>
+Create the table:
+<pre>
+CREATE TABLE hourly(id INTEGER PRIMARY KEY AUTOINCREMENT, temperature NUMERIC, humidity NUMERIC, currentdate DATE, currentime TIME);
+</pre>
+</p>
+<p>
+    Here's the Crontab config (add with <code>sudo crontab -e</code>):
+</p>
+<pre>
+* * * * * python3 /home/pi/sensors/minutely.py >> /home/pi/sensors/logs/minutely.log 2>&1
+</pre>
+<p>
+    and here's the <code>minutely.py</code> code:
+    <pre>
+import Adafruit_DHT
+from datetime import datetime
+import sqlite3
+import pytz
+
+DHT_SENSOR = Adafruit_DHT.DHT22
+DHT_PIN = 4
+
+tz = pytz.timezone('Australia/Sydney')
+now = datetime.now(tz).isoformat()
+humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN, retries=2)
+
+if humidity is not None and temperature is not None:
+    conn = sqlite3.connect('/home/pi/sensors/sensors.db')
+    c = conn.cursor()
+    c.execute('insert into minutely values (?,?,?)', (now, temperature, humidity))
+    conn.commit()
+    </pre>
+<p>
+    Change the timezone from Sydney to UTC, or whatever you prefer. Note that this is "best effort"; we use <code>read_retry</code> to try getting the sensor data but if it keeps failing, we don't insert anything into the database. I've been running this code for a few weeks now and once, I noticed that the DHT22 stopped working; re-seating the DHT22 seemed to fix the problem (maybe if it was on a soldered board, it would be ok). Rebooting the Pi doesn't help.
+</p>
+<h2>Camera</h2>
+<p>
+    Raspberry Pi cover camera setup in their <a href="https://www.raspberrypi.org/documentation/configuration/camera.md" target="_blank">documentation</a>. It's just:
+<pre>
+sudo raspi-config
+</pre>
+<p>
+  and then you need to go to Interfacing Options, select Camera and follow the prompt to enable the camera. You'll have to reboot. The documentation shows you how to take some test photos/videos to make sure it's working.
+</p>
+<h2>Putting it all together</h2>
+<p>
+  We want to end up with something like this but you can customise how you like:
+</p>
+<img src="/assets/baby-monitor-screenshot.jpg" alt="Baby monitor screenshot" width="40%"/>
+<p>
+  Now we have:
+  <ul>
+    <li>Current temperature and humidity</li>
+    <li>Record high/low temperatures</li>
+    <li>Working night vision camera</li>
+  </ul>
+</p>
+<p>
+    So now we need to put it all together so we can use all this data, and display it in a web browser. Here's the <a href="https://github.com/cjwfuller/pistreaming" target="_blank">code</a> to do this, which is a fork of existing code by <a href="https://github.com/waveform80" target="_blank">Dave Jones</a>. Follow the instructions in the README.md file but it's just:
+</p>
+<p>
+  <pre>
+$ git clone https://github.com/cjwfuller/pistreaming
+$ cd pistreaming
+$ python3 server.py
+Initializing websockets server on port 8084
+Initializing HTTP server on port 8082
+Initializing camera
+Initializing broadcast thread
+Spawning background conversion process
+Starting websockets thread
+Starting HTTP server thread
+Starting broadcast thread
+  </pre>
+</p>
+<p>
+  To keep this running, I run this in tmux:
+  <pre>
+$ sudo apt install tmux
+$ tmux
+$ python3 server.py
+...
+...
+  </pre>
+</p>
+<p>
+  Notice from the <code>server.py</code> that I'm running the Python server on port 8080, this is because I run NGINX on port 80 and get it to forward the requests to Python. I don't cover NGINX here but, just install it, start it, enable it at boot and use something like this:
+</p>
+<p>
+  <pre>
+upstream picam {
+        server localhost:8080;
+}
+
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        location / {
+                proxy_pass http://picam;
+        }
+}
+  </pre>
+</p>
+<p>
+  You'll notice that I'm able to access the stream with http://babycam.fuller.local. This is configured via a DNS server on my home network which is actually a <a href="https://pi-hole.net/" target="_blank">Pi Hole</a> too. I might do another blog post on this but they've made the setup so trivial now.
+</p>
+<h2>Enhancements</h2>
+<p>There are plenty of ways this build can be improved:</p>
+<ul>
+  <li>Make it more koala like, less killer robot to avoid scaring the baby! Putting this at the top of the list - folks on Twitter think the baby is going to freak her out with the current look!</li>
+  <li>Upgrade the rice/chopping board setup to perhaps a cheap camera tripod</li>
+  <li>Upgrade from the Raspberry Pi Zero WH to a Pi with more than 1 core</li>
+  <li>Write a start script, so when the Pi reboots, the stream doesn't have to be manually started</li>
+  <li>Graph the minutely temperature/humidity readings</li>
+</ul>
+<p>Thanks! Reach out if you have any questions or comments!</p>
